@@ -1,7 +1,7 @@
 $(document).ready(function()
 {
     let now = moment().format("dddd, MMMM Do YYYY, h:mm a");
-    let currentHour = parseInt(moment().format("h"));
+    let currentHour = parseInt(moment().format("H"));
 
     setCurrentTime();
     setPastPresent();
