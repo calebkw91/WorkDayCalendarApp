@@ -107,6 +107,7 @@
 
       setCurrentDay();
       setPastPresent();
+      getSavedEvents();
 
       function setCurrentDay()
       {
@@ -134,6 +135,23 @@
             $(this).children(".description").addClass("past");
             $(this).children(".description").removeClass("present");
             $(this).children(".description").removeClass("future");
+          }
+        })
+      }
+
+      function getSavedEvents()
+      {
+        $("textarea").each(function()
+        {
+          let hour = $(this).parent().attr("value");
+
+          if (localStorage.getItem(hour) === null)
+          {
+            return;
+          }
+          else
+          {
+            $(this).val(localStorage.getItem(hour));
           }
         })
       }
