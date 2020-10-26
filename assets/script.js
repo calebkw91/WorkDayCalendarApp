@@ -3,13 +3,18 @@ $(document).ready(function()
     let now = moment().format("dddd, MMMM Do YYYY, h:mm a");
     let currentHour = parseInt(moment().format("h"));
 
-    setCurrentDay();
+    setCurrentTime();
     setPastPresent();
     getSavedEvents();
 
-    function setCurrentDay()
+    function setCurrentTime()
     {
-    $("#currentDay").text(now);
+        $("#currentDay").text(now);
+
+        let minuteInterval = setInterval(function() 
+        {
+            now = moment().format("dddd, MMMM Do YYYY, h:mm a");
+        }, 1000);
     }
 
     function setPastPresent()
