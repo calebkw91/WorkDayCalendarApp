@@ -103,7 +103,16 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script>
       let now = moment().format("dddd, MMMM Do YYYY, h:mm a");
+      let currentHour = moment().format("h");
 
+      console.log(now);
+
+      setCurrentDay();
+
+      function setCurrentDay()
+      {
+        $("#currentDay").text(now);
+      }
 
     </script>
   </body>
