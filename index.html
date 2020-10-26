@@ -18,7 +18,7 @@
       href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="assets/style.css" />
     <title>Work Day Scheduler</title>
   </head>
 
@@ -101,70 +101,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-    <script>
-      let now = moment().format("dddd, MMMM Do YYYY, h:mm a");
-      let currentHour = parseInt(moment().format("h"));
+    <script src="assets/script.js"></script>
 
-      setCurrentDay();
-      setPastPresent();
-      getSavedEvents();
-
-      function setCurrentDay()
-      {
-        $("#currentDay").text(now);
-      }
-
-      function setPastPresent()
-      {
-        $("div").each(function()
-        { 
-          if (parseInt($(this).attr("value")) === currentHour)
-          {
-            $(this).children(".description").addClass("present");
-            $(this).children(".description").removeClass("past");
-            $(this).children(".description").removeClass("future");
-          }
-          else if (parseInt($(this).attr("value")) > currentHour)
-          {
-            $(this).children(".description").addClass("future");
-            $(this).children(".description").removeClass("past");
-            $(this).children(".description").removeClass("present");
-          }
-          else if (parseInt($(this).attr("value")) < currentHour)
-          {
-            $(this).children(".description").addClass("past");
-            $(this).children(".description").removeClass("present");
-            $(this).children(".description").removeClass("future");
-          }
-        })
-      }
-
-      function getSavedEvents()
-      {
-        $("textarea").each(function()
-        {
-          let hour = $(this).parent().attr("value");
-
-          if (localStorage.getItem(hour) === null)
-          {
-            return;
-          }
-          else
-          {
-            $(this).val(localStorage.getItem(hour));
-          }
-        })
-      }
-
-      $(".saveBtn").on("click", function()
-      {
-        let hour = $(this).parent().attr("value");
-
-        let description = $(this).prev().val();
-
-        localStorage.setItem(hour, description);
-      })
-
-    </script>
   </body>
 </html>
