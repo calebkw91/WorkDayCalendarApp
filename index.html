@@ -138,6 +138,15 @@
         })
       }
 
+      $(".saveBtn").on("click", function()
+      {
+        let hour = $(this).parent().attr("value");
+
+        let description = $(this).prev().val();
+
+        localStorage.setItem(hour, description);
+      })
+
     </script>
   </body>
 </html>
