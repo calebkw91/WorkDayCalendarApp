@@ -2,22 +2,28 @@ $(document).ready(function()
 {
     let now = moment().format("dddd, MMMM Do YYYY, h:mm a");
     let currentHour = parseInt(moment().format("H"));
+    let hourCheck;
+    let minuteInterval;
 
-    setCurrentTime();
-    setPastPresent();
+    updateCurrentTime();
+    updatePastPresent();
     getSavedEvents();
 
-    //Scans for time every second, and update UI
-    function setCurrentTime()
+    //Scans for time every second, and updates UI
+    function updateCurrentTime()
     {
         $("#currentDay").text(now);
 
-        let minuteInterval = setInterval(function() 
+        minuteInterval = setInterval(function() 
         {
             now = moment().format("dddd, MMMM Do YYYY, h:mm a");
+            currentHour = parseInt(moment().format("H"));
+            $("#currentDay").text(now);
         }, 1000);
+
     }
     
+    //Sets css class of past, present, future based on the current time
     function setPastPresent()
     {
         $("div").each(function()
@@ -43,6 +49,17 @@ $(document).ready(function()
         })
     }
 
+    //Runs function to update past, present, and future every time the hour changes
+    function updatePastPresent()
+    {
+        if (hourCheck != currentHour)
+        {
+            setPastPresent();
+            hourCheck = currentHour;
+        }
+    }
+
+    //Checks for saved events in local storage and updates description fields
     function getSavedEvents()
     {
         $("textarea").each(function()
@@ -60,6 +77,7 @@ $(document).ready(function()
         })
     }
 
+    //Saves description field text to local storage on button press
     $(".saveBtn").on("click", function()
     {
         let hour = $(this).parent().attr("value");
