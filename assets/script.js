@@ -1,19 +1,53 @@
+
 $(document).ready(function()
 {
-    let now = moment().format("dddd, MMMM Do YYYY, h:mm a");
+    let now;
     let currentHour = parseInt(moment().format("H"));
-    let timeBlock = $(".container");
-    let startTime = 7;
-    let endTime = 17;
+    let timeBlock = $("#time-blocks");
+    let startTime;
+    let endTime;
     let hourCheck;
     let minuteInterval;
-    let timeFormat = true;
+    let timeFormat;
 
+    checkSavedSettings();
+    setTimeFirst();
     generateTimeBlocks();
+
+    function setTimeFirst()
+    {
+        if(timeFormat === "12")
+            {
+                now = moment().format("dddd, MMMM Do YYYY, h:mm a");
+            }
+            else
+            {
+                now = moment().format("dddd, MMMM Do YYYY, H:mm");
+            }
+    }
+
+    function checkSavedSettings()
+    {
+        if(localStorage.getItem("startTime") != null)
+        {
+            startTime = parseInt(localStorage.getItem("startTime"));
+            endTime = parseInt(localStorage.getItem("endTime"));
+            timeFormat = localStorage.getItem("timeFormat");
+        }
+        else
+        {
+            startTime = 7;
+            endTime = 17;
+            timeFormat = "12";
+        }
+    }
 
     function generateTimeBlocks()
     {
         timeBlock.empty();
+
+        console.log(startTime);
+        console.log(endTime);
 
         for (let i=startTime; i<=endTime; i++)
         {
@@ -22,7 +56,7 @@ $(document).ready(function()
             let descriptionEl = $("<textarea>").addClass("col-10 description");
             let saveBtnEl = $("<button>").addClass("col-1 saveBtn").text("Save");
 
-            if(timeFormat)
+            if(timeFormat === "12")
             {
                 timeEl.text(moment({hour:i}).format("h a"));
             }
@@ -46,7 +80,14 @@ $(document).ready(function()
 
         minuteInterval = setInterval(function() 
         {
-            now = moment().format("dddd, MMMM Do YYYY, h:mm a");
+            if(timeFormat === "12")
+            {
+                now = moment().format("dddd, MMMM Do YYYY, h:mm a");
+            }
+            else
+            {
+                now = moment().format("dddd, MMMM Do YYYY, H:mm");
+            }
             currentHour = parseInt(moment().format("H"));
             $("#currentDay").text(now);
             updatePastPresent();
@@ -118,17 +159,4 @@ $(document).ready(function()
         localStorage.setItem(hour, description);
     })
 
-    $("#time-format").on("click", function()
-    {
-        if ($("#time-format:checked").val() === "on")
-        {
-            timeFormat = true;
-        }
-        else
-        {
-            timeFormat = false;
-        }
-
-        generateTimeBlocks();
-    })
 })
