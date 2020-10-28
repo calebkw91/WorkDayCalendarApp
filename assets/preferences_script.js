@@ -3,6 +3,7 @@ $(document).ready(function()
 {
     checkSavedSettings();
 
+    //Checks for saved settings, and creates a default if none are found
     function checkSavedSettings()
     {
         if(localStorage.getItem("startTime") != null)
@@ -29,6 +30,7 @@ $(document).ready(function()
         }
     }
 
+    //On submit, saves settings to local storage and returns to main calendar page
     $("#preferences").submit(function(event)
     {
         event.preventDefault();

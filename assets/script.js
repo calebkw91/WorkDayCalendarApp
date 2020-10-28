@@ -14,6 +14,8 @@ $(document).ready(function()
     setTimeFirst();
     generateTimeBlocks();
 
+    //Sets time on page right away, to prevent a 1 second delay caused by the interval updating the 
+    //time every second, see updateCurrentTime()
     function setTimeFirst()
     {
         if(timeFormat === "12")
@@ -26,6 +28,7 @@ $(document).ready(function()
             }
     }
 
+    //Checks for saved time format and work hour settings
     function checkSavedSettings()
     {
         if(localStorage.getItem("startTime") != null)
@@ -42,6 +45,8 @@ $(document).ready(function()
         }
     }
 
+    //Generates time blocks in HTML based on set working hours, then updates current time, 
+    //time block colors, and event descriptions
     function generateTimeBlocks()
     {
         timeBlock.empty();
